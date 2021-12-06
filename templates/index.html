@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="search">
+    <form action="{{url_for('index')}}" method="POST">
+        From:
+        <select name = "from">
+            <option value = "vizag">Vizag</option>
+            <option value = "hyderabad">Hyderabad</option>
+            <option value = "chennai">Chennai</option>
+            <option value = "delhi">Delhi</option>
+            <option value = "kolkata">Kolkata</option>
+        </select>
+        To:
+        <select name = "to">
+            <option value = "hyderabad">Hyderabad</option>
+            <option value = "vizag">Vizag</option>
+            <option value = "chennai">Chennai</option>
+            <option value = "delhi">Delhi</option>
+            <option value = "kolkata">Kolkata</option>
+        </select>
+        <input type = "submit" name = "Search">
+    </form> 
+</div>
+{% endblock %}
