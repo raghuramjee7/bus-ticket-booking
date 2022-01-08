@@ -2,8 +2,8 @@
 
 {% block content %}
 
+<h2 align = center>Bus Details</h2>
 <p align = "center">
-    Bus Details<br>
     {% for bus in busd %}
         Bus ID: {{ bus[0] }}<br>
         To: {{ bus[2].title() }}<br>
@@ -28,6 +28,7 @@
               <option value="{{i}}">{{i}}</option>
             {% endfor %}
           </select>
+        <br>
         <br>
         <input type = "submit" name = "submit">
     </form>
