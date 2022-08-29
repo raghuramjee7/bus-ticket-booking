@@ -85,23 +85,19 @@ def booking_details(id):
 
 # delete a particular reservation
 def delete(bookid):
-    try:
-        det = booking_details(bookid)
-        userid = det[0][1]
-        mycursor = mydb.cursor()
+    det = booking_details(bookid)
+    userid = det[0][1]
+    mycursor = mydb.cursor()
 
-        sql1 = "delete from booking where booking_id = '" + str(bookid) + "'"
-        mycursor.execute(sql1)
-        mydb.commit()
+    sql1 = "delete from booking where booking_id = '" + str(bookid) + "'"
+    mycursor.execute(sql1)
+    mydb.commit()
 
-        sql2 = "delete from user where userid = '" + str(userid) + "'"
-        mycursor.execute(sql2)
+    sql2 = "delete from user where userid = '" + str(userid) + "'"
+    mycursor.execute(sql2)
 
-        mydb.commit()
-    except:
-        pass
+    mydb.commit()
 
-    return
 
 # update the details of booking of user [name, email, number, seats]
 def updatebookuser(user, book, bookid):

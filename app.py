@@ -5,6 +5,7 @@ from sqlQueries import *
 app = Flask(__name__)
 
 
+# Search Page
 @app.route('/', methods = ["GET", "POST"])
 def index():
     if request.method=="POST":
@@ -16,6 +17,7 @@ def index():
             return redirect(f"/search/{from12}/{to12}")
     return render_template('index.html')
 
+# Search bar for updating
 @app.route('/update', methods = ["GET", "POST"])
 def update():
     if request.method=="POST":
@@ -23,6 +25,7 @@ def update():
         return redirect(f"/change/{id}")
     return render_template('update.html')
 
+# Update Page
 @app.route('/change/<id>')
 def change(id):
     busd = booking_details(id)
@@ -30,6 +33,7 @@ def change(id):
         return render_template('404.html')
     return render_template('change.html', busd = busd)
 
+# Booking details page, here we got an option for update or delete
 @app.route('/updel/<int:bookid>', methods = ["GET", "POST"])
 def updel(bookid):
     if request.method=="POST":
@@ -48,6 +52,7 @@ def updel(bookid):
             delete(bookid)
             return render_template("deleted.html")
 
+# Booking update page
 @app.route('/updatebook/<int:bookid>', methods = ["GET", "POST"])
 def updatebook(bookid):
     if request.method=="POST":
@@ -69,12 +74,13 @@ def updatebook(bookid):
 
     return render_template("updated.html")
 
-
+# Returns all bus details
 @app.route('/search/<from12>/<to12>')
 def search(from12, to12):
     details = allbus(to12, from12)
     return render_template('search.html', det = details)
 
+# Page for booking
 @app.route('/book/<int:busid>')
 def book(busid):
     busd = busdetails(busid)
@@ -82,7 +88,7 @@ def book(busid):
     seats = [i for i in range(1,seat+1)]
     return render_template('book.html', busd = busd, seats = seats)
 
-
+# Booking a ticket
 @app.route('/booked/<int:busid>', methods = ["GET", "POST"])
 def booked(busid):
     if request.method=="POST":
