@@ -6,6 +6,7 @@ def generateid():
     id = random.randint(11111,99999)
     return id
 
+# retrieve the number of pasengers from a particular booking
 def book_passengers(bookid):
     mycursor = mydb.cursor()
     sql = "SELECT passengers FROM booking WHERE booking_id = '" + str(bookid) + "'"
@@ -13,6 +14,7 @@ def book_passengers(bookid):
     seats = mycursor.fetchall()
     return seats[0][0]
 
+# retrieve the number of bus seats in left
 def get_bus_seats(busid):
     mycursor = mydb.cursor()
     sql = "SELECT capacity FROM bus WHERE busid = '" + str(busid) + "'"
@@ -20,12 +22,14 @@ def get_bus_seats(busid):
     seats = mycursor.fetchall()
     return seats
 
+# update the number of seats left after booking
 def update_bus_passengers(busid, newpass):
     mycursor = mydb.cursor()
     updtbk = "update bus set capacity = capacity-" + str(newpass) + " where busid = '" + str(busid) + "'"
     mycursor.execute(updtbk)
     mydb.commit()
 
+# fetch all the buses from a location to_ to from_
 def allbus(to_, from_):
 
     mycursor = mydb.cursor()
@@ -35,7 +39,8 @@ def allbus(to_, from_):
     myresult = mycursor.fetchall()
     return myresult
 
-def busdeatils(busid):
+# fetch all the details of a bus (eg. rating, time, seats_left, etc)
+def busdetails(busid):
     mycursor = mydb.cursor()
     sql = "SELECT * FROM bus WHERE busid = " + "'" + str(busid) + "'"
     mycursor.execute(sql)
@@ -43,6 +48,7 @@ def busdeatils(busid):
     myresult = mycursor.fetchall()
     return myresult
 
+# add a new user to the users table
 def userinsert(det):
     mycursor = mydb.cursor()
 
@@ -52,6 +58,7 @@ def userinsert(det):
     mydb.commit()
     return
 
+# add a new booking to the booking table
 def bookinginsert(det):
     mycursor = mydb.cursor()
 
@@ -62,6 +69,7 @@ def bookinginsert(det):
     mydb.commit()
     return
 
+# retrieve the booking details of a particular booking
 def booking_details(id):
     mycursor = mydb.cursor()
     sql1 = "SELECT * FROM booking WHERE booking_id = " + "'" + str(id) + "'"
@@ -75,6 +83,7 @@ def booking_details(id):
     result3 = mycursor.fetchall()
     return result1+result2+result3
 
+# delete a particular reservation
 def delete(bookid):
     try:
         det = booking_details(bookid)
@@ -94,14 +103,7 @@ def delete(bookid):
 
     return
 
-def updatebookingpassengers(bookid, pas):
-    mycursor = mydb.cursor()
-    pas = pas[0]
-    updtbk = "update booking set passengers = " + str(pas) + " WHERE booking_id = '" + str(bookid) + "'"
-    print(updtbk)
-    mycursor.execute(updtbk)
-    mydb.commit()
-
+# update the details of booking of user [name, email, number, seats]
 def updatebookuser(user, book, bookid):
     mycursor = mydb.cursor()
     sql = "SELECT userid FROM booking WHERE booking_id = '" + str(bookid) + "'"
@@ -110,14 +112,23 @@ def updatebookuser(user, book, bookid):
     userid = userid[0][0]
     pas = book
     updatebookingpassengers(bookid, pas)
-    
 
     name, phno, email = user
     updtus = "update user set username = '" + str(name) + "',phone = '" + str(phno) + "',email = '" + str(email) + "' where userid = '" + str(userid) + "'"
     mycursor.execute(updtus)
     mydb.commit()
 
+# update the number of passengers in a booking 
+def updatebookingpassengers(bookid, pas):
+    mycursor = mydb.cursor()
+    pas = pas[0]
+    updtbk = "update booking set passengers = " + str(pas) + " WHERE booking_id = '" + str(bookid) + "'"
+    print(updtbk)
+    mycursor.execute(updtbk)
+    mydb.commit()
     
+
+# --------- CONNECT TO THE DATABASE ------------  
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",

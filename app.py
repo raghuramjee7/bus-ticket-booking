@@ -77,7 +77,7 @@ def search(from12, to12):
 
 @app.route('/book/<int:busid>')
 def book(busid):
-    busd = busdeatils(busid)
+    busd = busdetails(busid)
     seat = busd[0][7]
     seats = [i for i in range(1,seat+1)]
     return render_template('book.html', busd = busd, seats = seats)
